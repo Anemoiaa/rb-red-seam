@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gray-primary: #F8F6F7;
+  --color-gray-primary-dark: #E1DFE1;
+  --color-blue-dark: #10151F;
+  --color-blue-dark-light: #3E424A;
+  --color-red-primary: #FF4000;
+}
+
+@utility container {
+  width: 100%;
+  max-width: 1750px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
