@@ -1,0 +1,4 @@
+<template>
+  DefaultLayout
+  <slot />
+</template>

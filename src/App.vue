@@ -1,13 +1,9 @@
 <template>
-  <div class="container">
-      <h1 class="text-2xl text-red-primary">Hello</h1>
-  </div>
+  <AppContainerLayout>
+    <RouterView />
+  </AppContainerLayout>
 </template>
 
 <script setup>
-
+import AppContainerLayout from '@/layouts/AppContainerLayout.vue'
 </script>
-
-<style scoped>
-
-</style>
