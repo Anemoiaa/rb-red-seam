@@ -1,14 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-@import "../../../node_modules/tailwindcss/dist/lib.d.mts";
+@import 'tailwindcss';
 
 @theme {
-  --font-poppins: "Poppins", sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
 
-  --color-gray-primary: #F8F6F7;
-  --color-gray-primary-dark: #E1DFE1;
-  --color-blue-dark: #10151F;
-  --color-blue-dark-light: #3E424A;
-  --color-red-primary: #FF4000;
+  --font-text-4xl: 32px;
+
+  --color-gray-primary: #f8f6f7;
+  --color-gray-primary-dark: #e1dfe1;
+  --color-blue-dark: #10151f;
+  --color-blue-dark-light: #3e424a;
+  --color-red-primary: #ff4000;
+
+  --var-header-height: 80px;
+
+  --radius-lg: 10px;
 }
 
 @utility container {
@@ -18,9 +24,14 @@
   padding: 0 15px;
 }
 
+@utility rounded-lg {
+  width: 100%;
+  max-width: 100%;
+}
+
 @layer base {
   button:not(:disabled),
-  [role="button"]:not(:disabled) {
+  [role='button']:not(:disabled) {
     cursor: pointer;
   }
 }
