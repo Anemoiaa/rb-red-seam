@@ -20,8 +20,7 @@
       <div
         class="h-full w-full bg-cover bg-no-repeat"
         :style="{ backgroundImage: `url(${cover})`, backgroundPosition: 'top right' }"
-      >
-      </div>
+      ></div>
       <slot />
     </div>
   </main>

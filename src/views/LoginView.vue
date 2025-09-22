@@ -20,12 +20,12 @@
           placeholder="Password"
           :error="errors.password"
         />
-        <PrimaryButton type="submit">
-          Log in
-        </PrimaryButton>
+        <PrimaryButton type="submit"> Log in </PrimaryButton>
       </form>
       <div class="mt-5 text-center">
-        <p class="text-sm">Not a member? <RouterLink class="text-red-primary font-medium">Register</RouterLink></p>
+        <p class="text-sm">
+          Not a member? <RouterLink class="text-red-primary font-medium">Register</RouterLink>
+        </p>
       </div>
     </div>
   </div>
