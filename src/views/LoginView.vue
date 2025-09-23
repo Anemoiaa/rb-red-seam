@@ -24,7 +24,8 @@
       </form>
       <div class="mt-5 text-center">
         <p class="text-sm">
-          Not a member? <RouterLink class="text-red-primary font-medium">Register</RouterLink>
+          Not a member?
+          <RouterLink to="register" class="text-red-primary font-medium">Register</RouterLink>
         </p>
       </div>
     </div>
