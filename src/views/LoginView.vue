@@ -5,19 +5,19 @@
       <form class="mt-12 flex flex-col gap-4" @submit.prevent="onSubmit">
         <PrimaryInput
           v-model="email"
-          v-bind="emailAttrs"
           id="email"
           type="email"
           placeholder="Email"
-          autocomplete="username"
+          autocomplete="email"
+          required
           :error="errors.email"
         />
         <PrimaryInput
           v-model="password"
-          v-bind="passwordAttrs"
           id="password"
           type="password"
           placeholder="Password"
+          required
           :error="errors.password"
         />
         <PrimaryButton type="submit"> Log in </PrimaryButton>
@@ -36,21 +36,22 @@ import * as yup from 'yup'
 import { useForm } from 'vee-validate'
 import PrimaryInput from '@/compoonents/UI/PrimaryInput.vue'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
+import { MIN_PASSWORD_LENGTH } from '@/config/validations.js'
 
 const schema = yup.object({
   email: yup.string().required('Email is required').email('Invalid email'),
   password: yup
     .string()
     .required('Password is required')
-    .min(3, 'Password must be at least 3 characters'),
+    .min(MIN_PASSWORD_LENGTH, `Password must be at least ${MIN_PASSWORD_LENGTH} characters`),
 })
 
 const { handleSubmit, errors, defineField } = useForm({ validationSchema: schema })
 
-const [email, emailAttrs] = defineField('email', {
+const [email] = defineField('email', {
   validateOnModelUpdate: false,
 })
-const [password, passwordAttrs] = defineField('password', {
+const [password] = defineField('password', {
   validateOnModelUpdate: false,
 })
 
