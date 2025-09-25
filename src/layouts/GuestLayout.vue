@@ -14,20 +14,11 @@
     </div>
   </header>
   <main>
-    <div
-      class="grid grid-cols-2 h-[calc(100vh-var(--var-header-height))] max-h-[2160px] min-h-[600px]"
-    >
-      <div
-        class="h-full w-full bg-cover bg-no-repeat"
-        :style="{ backgroundImage: `url(${cover})`, backgroundPosition: 'top right' }"
-      ></div>
-      <slot />
-    </div>
+    <slot />
   </main>
 </template>
 
 <script setup>
-import cover from '@/assets/images/cover.png'
 import AppLogo from '@/compoonents/AppLogo.vue'
 import IconUser from '@/icons/IconUser.vue'
 </script>
