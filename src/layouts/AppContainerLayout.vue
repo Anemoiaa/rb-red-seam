@@ -13,7 +13,7 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import GuestLayout from '@/layouts/GuestLayout.vue'
 
 const route = useRoute()
-const authService = new AuthService()
+const authService = AuthService
 
 const layoutComponent = computed(() => {
   if (route.meta.layout) {

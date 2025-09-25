@@ -29,7 +29,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-  const auth = new AuthService().isAuthenticated()
+  const auth = AuthService.isAuthenticated()
 
   if (to.meta.guestOnly && auth) {
     return { name: 'products' }

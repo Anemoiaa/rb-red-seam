@@ -51,7 +51,6 @@ import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
 import { MIN_PASSWORD_LENGTH } from '@/config/validations.js'
 import cover from '@/assets/images/cover.png'
 
-const authService = new AuthService()
 const router = useRouter()
 
 const schema = yup.object({
@@ -72,7 +71,7 @@ const [password] = defineField('password', {
 })
 
 const onSubmit = handleSubmit(async (values) => {
-  await authService.login(values.email, values.password)
+  await AuthService.login(values.email, values.password)
   await router.push({ name: 'products' })
 })
 </script>

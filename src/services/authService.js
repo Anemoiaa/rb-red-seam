@@ -14,10 +14,15 @@ class AuthService {
     store.setUser(data.user)
   }
 
+  getUser() {
+    const store = useAuthStore()
+    return store.getUser()
+  }
+
   isAuthenticated() {
     const store = useAuthStore()
     return Boolean(store.getToken())
   }
 }
 
-export default AuthService
+export default new AuthService()
