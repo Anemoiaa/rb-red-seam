@@ -1,32 +1,40 @@
 <template>
-  <div class="flex justify-center mt-[20%] font-poppins">
-    <div class="w-full max-w-[554px]">
-      <h1 class="font-semibold text-[42px]">Log in</h1>
-      <form class="mt-12 flex flex-col gap-4" @submit.prevent="onSubmit">
-        <PrimaryInput
-          v-model="email"
-          id="email"
-          type="email"
-          placeholder="Email"
-          autocomplete="email"
-          required
-          :error="errors.email"
-        />
-        <PrimaryInput
-          v-model="password"
-          id="password"
-          type="password"
-          placeholder="Password"
-          required
-          :error="errors.password"
-        />
-        <PrimaryButton type="submit"> Log in </PrimaryButton>
-      </form>
-      <div class="mt-5 text-center">
-        <p class="text-sm">
-          Not a member?
-          <RouterLink to="register" class="text-red-primary font-medium">Register</RouterLink>
-        </p>
+  <div
+    class="grid grid-cols-2 h-[calc(100vh-var(--var-header-height))] max-h-[2160px] min-h-[600px]"
+  >
+    <div
+      class="h-full w-full bg-cover bg-no-repeat"
+      :style="{ backgroundImage: `url(${cover})`, backgroundPosition: 'top right' }"
+    ></div>
+    <div class="flex justify-center mt-[20%] font-poppins">
+      <div class="w-full max-w-[554px]">
+        <h1 class="font-semibold text-[42px]">Log in</h1>
+        <form class="mt-12 flex flex-col gap-4" @submit.prevent="onSubmit">
+          <PrimaryInput
+            v-model="email"
+            id="email"
+            type="email"
+            placeholder="Email"
+            autocomplete="email"
+            required
+            :error="errors.email"
+          />
+          <PrimaryInput
+            v-model="password"
+            id="password"
+            type="password"
+            placeholder="Password"
+            required
+            :error="errors.password"
+          />
+          <PrimaryButton type="submit"> Log in </PrimaryButton>
+        </form>
+        <div class="mt-5 text-center">
+          <p class="text-sm">
+            Not a member?
+            <RouterLink to="register" class="text-red-primary font-medium">Register</RouterLink>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -35,9 +43,16 @@
 <script setup>
 import * as yup from 'yup'
 import { useForm } from 'vee-validate'
+import { useRouter } from 'vue-router'
+
+import AuthService from '@/services/authService.js'
 import PrimaryInput from '@/compoonents/UI/PrimaryInput.vue'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
 import { MIN_PASSWORD_LENGTH } from '@/config/validations.js'
+import cover from '@/assets/images/cover.png'
+
+const authService = new AuthService()
+const router = useRouter()
 
 const schema = yup.object({
   email: yup.string().required('Email is required').email('Invalid email'),
@@ -57,6 +72,7 @@ const [password] = defineField('password', {
 })
 
 const onSubmit = handleSubmit(async (values) => {
-  console.log('Login success', values)
+  await authService.login(values.email, values.password)
+  await router.push({ name: 'products' })
 })
 </script>
