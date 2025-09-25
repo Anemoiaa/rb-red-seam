@@ -7,9 +7,17 @@ class AuthService {
   }
 
   async login(email, password) {
-    const store = useAuthStore()
     const data = await this.api.login({ email, password })
 
+    const store = useAuthStore()
+    store.setToken(data.token)
+    store.setUser(data.user)
+  }
+
+  async register(user) {
+    const data = await this.api.register(user)
+
+    const store = useAuthStore()
     store.setToken(data.token)
     store.setUser(data.user)
   }

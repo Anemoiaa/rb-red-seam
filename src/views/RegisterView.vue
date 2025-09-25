@@ -87,14 +87,17 @@
 <script setup>
 import * as yup from 'yup'
 import { useForm } from 'vee-validate'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 import PrimaryInput from '@/compoonents/UI/PrimaryInput.vue'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
 import IconCamera from '@/compoonents/Icons/IconCamera.vue'
 import cover from '@/assets/images/cover.png'
 import * as validationRules from '@/config/validations.js'
+import AuthService from '@/services/authService.js'
 
+const router = useRouter()
 
 const schema = yup.object({
   username: yup
@@ -132,17 +135,33 @@ const [password] = defineField('password', {
 const [passwordConfirmation] = defineField('passwordConfirmation')
 
 // TODO validate file size and type
-const avatarSrc = ref(null)
+const avatarFile = ref(null)
+
+const avatarSrc = computed(() => {
+  if (avatarFile.value) {
+    return URL.createObjectURL(avatarFile.value)
+  }
+
+  return null
+})
 
 function processAvatar(e) {
-  avatarSrc.value = URL.createObjectURL(e.target.files[0])
+  avatarFile.value = e.target.files[0]
 }
 
 function removeAvatar() {
-  avatarSrc.value = null
+  avatarFile.value = null
 }
 
 const onSubmit = handleSubmit(async (values) => {
-  console.log('Register success', values)
+  await AuthService.register({
+    username: values.username,
+    email: values.email,
+    password: values.password,
+    passwordConfirmation: values.passwordConfirmation,
+    avatar: avatarFile.value,
+  })
+
+  await router.push({ name: 'products' })
 })
 </script>
