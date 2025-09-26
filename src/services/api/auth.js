@@ -4,12 +4,8 @@ const LOGIN_URI = '/login'
 const REGISTER_URI = '/register'
 
 class Auth {
-  constructor() {
-    this.client = client
-  }
-
   async login(credentials) {
-    const { data } = await this.client.post(LOGIN_URI, credentials)
+    const { data } = await client.post(LOGIN_URI, credentials)
     return data
   }
 
@@ -23,7 +19,7 @@ class Auth {
       formData.append('avatar', avatar)
     }
 
-    const { data } = await this.client.post(REGISTER_URI, formData, {
+    const { data } = await client.post(REGISTER_URI, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
 
