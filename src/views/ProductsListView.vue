@@ -260,7 +260,7 @@ function nextPage() {
   }
 }
 
-watch([currentPage], async() => {
+watch([currentPage], async () => {
   await updateQuery()
 })
 
@@ -271,8 +271,7 @@ onMounted(() => {
     currentPage.value = Number(page)
   }
 
-  if (sort)
-  {
+  if (sort) {
     selectedSortBy.value = sort
   }
 
@@ -291,4 +290,3 @@ onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
 })
 </script>
-

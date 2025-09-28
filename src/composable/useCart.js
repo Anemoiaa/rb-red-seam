@@ -13,7 +13,6 @@ const subTotal = computed(() => cartItems.value.reduce((acc, item) => acc + item
 const total = computed(() => subTotal.value + DELIVERY_PRICE)
 
 export function useCart() {
-
   function findCartItem(productId, color, size) {
     return cartItems.value.find(
       (item) => item.id === productId && item.color === color && item.size === size,

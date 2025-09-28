@@ -72,7 +72,9 @@ import { ref, computed } from 'vue'
 
 const props = defineProps({
   id: String,
-  modelValue: String|Number,
+  modelValue: {
+    required: true,
+  },
   label: String,
   type: {
     type: String,

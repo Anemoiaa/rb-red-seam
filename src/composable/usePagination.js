@@ -11,9 +11,12 @@ export default function usePagination(data) {
 
     const delta = 2
     const start = Math.max(1, currentPage - delta)
-    const end = start <= delta ? Math.min(meta.last_page, start + delta * 2) : Math.min(meta.last_page, currentPage + delta)
+    const end =
+      start <= delta
+        ? Math.min(meta.last_page, start + delta * 2)
+        : Math.min(meta.last_page, currentPage + delta)
 
-    const pagination=  new Array(end - start + 1).fill(0).map((_, i) => start + i)
+    const pagination = new Array(end - start + 1).fill(0).map((_, i) => start + i)
 
     if (pagination.length > meta.last_page) {
       pagination.splice(meta.last_page)
