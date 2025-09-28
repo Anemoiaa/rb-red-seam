@@ -2,11 +2,11 @@
   <header>
     <div class="container">
       <div class="flex justify-between py-[28px] font-poppins">
-        <div class="flex items-center gap-1">
+        <RouterLink to="/" class="flex items-center gap-1">
           <AppLogo />
           <h1 class="font-semibold">RedSeam Clothing</h1>
-        </div>
-        <RouterLink class="flex items-center gap-2" to="login">
+        </RouterLink>
+        <RouterLink class="flex items-center gap-2" :to="{ name: 'login' }">
           <IconUser />
           <span class="font-medium text-xs">Log in</span>
         </RouterLink>
