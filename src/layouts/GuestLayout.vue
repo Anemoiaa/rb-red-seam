@@ -20,5 +20,5 @@
 
 <script setup>
 import AppLogo from '@/compoonents/AppLogo.vue'
-import IconUser from '@/icons/IconUser.vue'
+import IconUser from '@/compoonents/Icons/IconUser.vue'
 </script>
