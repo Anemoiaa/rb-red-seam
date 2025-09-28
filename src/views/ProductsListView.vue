@@ -109,7 +109,7 @@
     </div>
 
     <!--  Pagination -->
-    <div class="mt-[90px]">
+    <div v-if="pageNums.length" class="mt-[90px]">
       <div class="flex justify-center items-center gap-2">
         <button @click="prevPage">
           <IconChevronDown class="rotate-90" />
