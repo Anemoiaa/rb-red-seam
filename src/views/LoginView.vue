@@ -71,6 +71,6 @@ const [password] = defineField('password', {
 })
 
 const onSubmit = handleSubmit(async (values) => {
-  await login(values.email, values.password)
+  await login({ email: values.email, password: values.password })
 })
 </script>

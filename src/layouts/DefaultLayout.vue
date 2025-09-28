@@ -33,7 +33,7 @@
               class="mt-24 absolute right-0 min-w-[150px] border border-gray-primary-dark rounded-lg p-2 bg-white"
               ref="userProfileDropdown"
             >
-              <button @click="authService.logout()">Log out</button>
+              <button @click="logout()">Log out</button>
             </div>
           </div>
         </div>
@@ -69,7 +69,7 @@ import IconChevronDown from '@/compoonents/Icons/IconChevronDown.vue'
 
 const { cartIsOpen, openCart, closeCart } = useCart()
 
-const { getUser } = useAuth()
+const { getUser, logout } = useAuth()
 
 const user = ref(null)
 

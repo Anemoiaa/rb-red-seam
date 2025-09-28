@@ -123,7 +123,7 @@ const schema = yup.object({
   zipCode: yup
     .string()
     .required('Zip code is required')
-    .matches(/^[0-9]{5}(?:-[0-9]{4})?$/, 'Zip code format is invalid')
+    .matches(/^[0-9]+$/, 'Must be only digits')
     .min(MIN_ZIP_LENGTH, `Zip code must be at least ${MIN_ZIP_LENGTH} digits`)
     .max(MAX_ZIP_LENGTH, `Zip code cannot exceed ${MAX_ZIP_LENGTH} digits`),
 })
@@ -139,7 +139,12 @@ const [zipCode] = defineField('zipCode', { validateOnModelUpdate: false })
 const showSuccessMessage = ref(false)
 
 const onSubmit = handleSubmit(async (values) => {
-  await checkout(values.name, values.surname, values.email, values.address, values.zipCode)
-  showSuccessMessage.value = true
+  showSuccessMessage.value = await checkout(
+    values.name,
+    values.surname,
+    values.email,
+    values.address,
+    values.zipCode,
+  )
 })
 </script>
