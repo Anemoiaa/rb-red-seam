@@ -71,7 +71,7 @@
             placeholder="Confirm password"
             :error="errors.passwordConfirmation"
           />
-          <PrimaryButton type="submit">Register</PrimaryButton>
+          <PrimaryButton class="py-2" type="submit">Register</PrimaryButton>
         </form>
         <div class="mt-5 text-center">
           <p class="text-sm">
@@ -93,7 +93,6 @@ import { useRouter } from 'vue-router'
 import PrimaryInput from '@/compoonents/UI/PrimaryInput.vue'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
 import IconCamera from '@/compoonents/Icons/IconCamera.vue'
-import cover from '@/assets/images/cover.png'
 import * as validationRules from '@/config/validations.js'
 import AuthService from '@/services/authService.js'
 

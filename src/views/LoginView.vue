@@ -27,7 +27,7 @@
             required
             :error="errors.password"
           />
-          <PrimaryButton type="submit"> Log in </PrimaryButton>
+          <PrimaryButton class="py-[10px] text-sm" type="submit"> Log in </PrimaryButton>
         </form>
         <div class="mt-5 text-center">
           <p class="text-sm">
@@ -49,7 +49,6 @@ import AuthService from '@/services/authService.js'
 import PrimaryInput from '@/compoonents/UI/PrimaryInput.vue'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
 import { MIN_PASSWORD_LENGTH } from '@/config/validations.js'
-import cover from '@/assets/images/cover.png'
 
 const router = useRouter()
 
