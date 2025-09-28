@@ -45,13 +45,14 @@
 </template>
 
 <script setup>
+import { ref, onBeforeMount } from 'vue'
+import { useCart } from '@/composable/useCart.js'
+import authService from '@/services/authService.js'
+
+import ShopCart from '@/compoonents/ShopCart.vue'
 import AppLogo from '@/compoonents/AppLogo.vue'
 import IconCart from '@/compoonents/Icons/IconCart.vue'
-import { ref, onBeforeMount } from 'vue'
-import authService from '@/services/authService.js'
 import IconChevronDown from '@/compoonents/Icons/IconChevronDown.vue'
-import { useCart } from '@/composable/useCart.js'
-import ShopCart from '@/compoonents/ShopCart.vue'
 
 const user = ref(null)
 const { cartIsOpen, openCart, closeCart } = useCart()

@@ -45,10 +45,10 @@ import * as yup from 'yup'
 import { useForm } from 'vee-validate'
 import { useRouter } from 'vue-router'
 
+import { MIN_PASSWORD_LENGTH } from '@/config/validations.js'
 import AuthService from '@/services/authService.js'
 import PrimaryInput from '@/compoonents/UI/PrimaryInput.vue'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
-import { MIN_PASSWORD_LENGTH } from '@/config/validations.js'
 
 const router = useRouter()
 

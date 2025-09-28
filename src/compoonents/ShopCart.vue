@@ -68,11 +68,11 @@
   </div>
 </template>
 <script setup>
+import { DELIVERY_PRICE } from '@/config/app.js'
+import { useCart } from '@/composable/useCart.js'
+import IconMarketCart from '@/compoonents/Icons/IconMarketCart.vue'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
 import IconXmark from '@/compoonents/Icons/IconXmark.vue'
-import { useCart } from '@/composable/useCart.js'
-import { DELIVERY_PRICE } from '@/config/app.js'
-import IconMarketCart from '@/compoonents/Icons/IconMarketCart.vue'
 
 const { cartItems, cartLength, closeCart, subTotal, total, updateItem, removeItem } = useCart()
 

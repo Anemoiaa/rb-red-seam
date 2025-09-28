@@ -93,12 +93,12 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import ProductsService from '@/services/productsService.js'
 import { useRoute } from 'vue-router'
 import { colorMap } from '@/config/colors.js'
+import { useCart } from '@/composable/useCart.js'
+import ProductsService from '@/services/productsService.js'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
 import IconCart from '@/compoonents/Icons/IconCart.vue'
-import { useCart } from '@/composable/useCart.js'
 
 const route = useRoute()
 

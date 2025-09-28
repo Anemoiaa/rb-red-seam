@@ -87,14 +87,14 @@
 <script setup>
 import * as yup from 'yup'
 import { useForm } from 'vee-validate'
-import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { computed, ref } from 'vue'
 
+import * as validationRules from '@/config/validations.js'
+import AuthService from '@/services/authService.js'
 import PrimaryInput from '@/compoonents/UI/PrimaryInput.vue'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
 import IconCamera from '@/compoonents/Icons/IconCamera.vue'
-import * as validationRules from '@/config/validations.js'
-import AuthService from '@/services/authService.js'
 
 const router = useRouter()
 

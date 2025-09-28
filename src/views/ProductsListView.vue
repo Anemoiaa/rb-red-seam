@@ -116,12 +116,13 @@
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+
 import ProductsService from '@/services/productsService.js'
 import ProductPreview from '@/compoonents/ProductPreview.vue'
-import IconChevronDown from '@/compoonents/Icons/IconChevronDown.vue'
-import IconFilter from '@/compoonents/Icons/IconFilter.vue'
 import PrimaryInput from '@/compoonents/UI/PrimaryInput.vue'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
+import IconChevronDown from '@/compoonents/Icons/IconChevronDown.vue'
+import IconFilter from '@/compoonents/Icons/IconFilter.vue'
 import IconXmark from '@/compoonents/Icons/IconXmark.vue'
 
 const sortOptions = [
