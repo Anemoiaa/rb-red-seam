@@ -53,6 +53,10 @@ async function removeItem(id) {
   await fetchCart()
 }
 
+async function checkout(name, surname, email, address, zipCode) {
+  return await CartApi.checkout(name, surname, email, address, zipCode)
+}
+
 export function useCart() {
   onMounted(async () => {
     if (!cartItems.value.length) {
@@ -66,12 +70,11 @@ export function useCart() {
     openCart,
     closeCart,
     cartIsOpen: isOpen,
-
     subTotal,
     total,
-
     addItem,
     updateItem,
     removeItem,
+    checkout,
   }
 }

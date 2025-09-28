@@ -37,7 +37,11 @@
     </transition>
     <transition name="slide">
       <div v-if="cartIsOpen" class="fixed top-0 right-0 w-full max-w-[540px] h-full bg-white z-50">
-        <ShopCart />
+        <ShopCart
+          @clickOnCartSubmitButton="$router.push({ name: 'checkout' })"
+          itemsWrapperClass="min-h-[300px] max-h-[70%] overflow-y-auto"
+          class="p-10"
+        />
       </div>
     </transition>
     <slot />

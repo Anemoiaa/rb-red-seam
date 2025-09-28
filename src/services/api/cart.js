@@ -2,6 +2,7 @@ import client from './client.js'
 
 const CART_URI = '/cart'
 const CART_PRODUCT_URI = '/cart/products'
+const CART_CHECKOUT_URI = '/cart/checkout'
 
 class CartApi {
   async getCart() {
@@ -31,7 +32,15 @@ class CartApi {
     return data
   }
 
-  async checkout() {}
+  async checkout(name, surname, email, address, zipCode) {
+    return await client.post(CART_CHECKOUT_URI, {
+      name,
+      surname,
+      email,
+      address,
+      zip_code: zipCode,
+    })
+  }
 }
 
 export default new CartApi()

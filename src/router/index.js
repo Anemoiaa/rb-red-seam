@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import AuthService from '@/services/authService.js'
 import LoginView from '@/views/LoginView.vue'
 import GuestLayout from '@/layouts/GuestLayout.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import ProductsListView from '@/views/ProductsListView.vue'
-import AuthService from '@/services/authService.js'
 import ProductView from '@/views/ProductView.vue'
+import CheckoutView from '@/views/CheckoutView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,12 @@ const router = createRouter({
       path: '/products/:id',
       name: 'product',
       component: ProductView,
+    },
+    {
+      path: '/checkout',
+      name: 'checkout',
+      component: CheckoutView,
+      meta: { requiresAuth: true },
     },
   ],
 })

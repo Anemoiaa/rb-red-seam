@@ -1,11 +1,11 @@
 <template>
-  <div class="h-full flex flex-col p-10 font-poppins">
+  <div class="h-full flex flex-col font-poppins overflow-y-auto">
     <div class="flex justify-between items-center">
       <h2 class="font-medium text-xl">Shopping cart {{ cartLength ? `(${cartLength})` : null }}</h2>
-      <IconXmark @click="closeCart" class="cursor-pointer w-8 h-8" />
+      <IconXmark v-if="showXmark" @click="closeCart" class="cursor-pointer w-8 h-8" />
     </div>
     <template v-if="cartLength">
-      <ul class="mt-16 mb-8 min-h-[300px] max-h-[70%] overflow-y-auto">
+      <ul class="mt-16 mb-8 flex flex-col gap-[36px]" :class="itemsWrapperClass">
         <li v-for="item in cartItems" :key="item.id" class="flex gap-4">
           <div
             class="shrink-0 w-[100px] h-[134px] flex justify-center items-center border border-gray-primary-dark rounded-[10px]"
@@ -49,7 +49,9 @@
             <span>$ {{ total }} </span>
           </div>
         </div>
-        <PrimaryButton class="mt-[100px] py-4 text-lg font-medium">Go to checkout</PrimaryButton>
+        <PrimaryButton @click="onClick" class="mt-[100px] py-4 text-lg font-medium" type="submit">
+          {{ mode === 'checkout' ? 'Go to checkout' : 'Pay' }}
+        </PrimaryButton>
       </div>
     </template>
 
@@ -74,6 +76,23 @@ import IconMarketCart from '@/compoonents/Icons/IconMarketCart.vue'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
 import IconXmark from '@/compoonents/Icons/IconXmark.vue'
 
+defineProps({
+  showXmark: {
+    type: Boolean,
+    default: true,
+  },
+  itemsWrapperClass: {
+    type: String,
+    default: '',
+  },
+  submitButtonText: {
+    type: String,
+    default: 'Go to checkout',
+  },
+})
+
+const emit = defineEmits(['clickOnCartSubmitButton'])
+
 const { cartItems, cartLength, closeCart, subTotal, total, updateItem, removeItem } = useCart()
 
 async function incrementQuantity(item) {
@@ -94,6 +113,11 @@ async function decrementQuantity(item) {
       quantity: item.quantity - 1,
     })
   }
+}
+
+function onClick() {
+  closeCart()
+  emit('clickOnCartSubmitButton')
 }
 
 function targetImage(product) {
