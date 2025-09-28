@@ -8,7 +8,7 @@
     ></div>
     <div class="flex justify-center mt-[20%] font-poppins">
       <div class="w-full max-w-[554px]">
-        <h1 class="font-semibold text-[42px]">Log in</h1>
+        <h1 class="text-heading-1 text-blue-dark">Log in</h1>
         <form class="mt-12 flex flex-col gap-4" @submit.prevent="onSubmit">
           <PrimaryInput
             v-model="email"

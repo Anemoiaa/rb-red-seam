@@ -50,7 +50,7 @@
           </div>
         </div>
         <PrimaryButton @click="onClick" class="mt-[100px] py-4 text-lg font-medium" type="submit">
-          {{ mode === 'checkout' ? 'Go to checkout' : 'Pay' }}
+          {{ submitButtonText }}
         </PrimaryButton>
       </div>
     </template>

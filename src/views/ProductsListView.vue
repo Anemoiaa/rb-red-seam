@@ -2,7 +2,7 @@
   <section class="container">
     <div class="mt-18 font-poppins">
       <div class="flex items-center justify-between">
-        <h1 class="font-semibold text-[42px]">Products</h1>
+        <h1 class="text-heading-1 text-blue-dark">Products</h1>
         <div class="flex items-center">
           <div class="text-xs text-blue-dark-light">{{ showingItemInfoString }}</div>
           <div class="text-gray-primary-dark mx-8">|</div>

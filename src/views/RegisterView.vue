@@ -8,7 +8,7 @@
     ></div>
     <div class="flex justify-center mt-[20%] font-poppins">
       <div class="w-full max-w-[554px]">
-        <h1 class="font-semibold text-[42px]">Registration</h1>
+        <h1 class="text-heading-1 text-blue-dark">Registration</h1>
         <form class="mt-12 flex flex-col gap-4" @submit.prevent="onSubmit">
           <div class="flex gap-[15px] items-center">
             <label for="avatar" class="w-fit flex items-center gap-[15px]" title="Upload avatar">

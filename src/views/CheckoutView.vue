@@ -20,7 +20,7 @@
             />
           </svg>
         </div>
-        <div class="mt-10 text-[42px] text-blue-dark">Congrats!</div>
+        <div class="mt-10 text-heading-1 text-blue-dark">Congrats!</div>
         <div class="mt-4 text-sm text-blue-dark-light">Your order is placed successfully!</div>
         <RouterLink :to="{ name: 'products' }">
           <PrimaryButton class="mt-20 px-10 py-[10px]"> Continue shopping </PrimaryButton>
@@ -29,7 +29,7 @@
     </template>
 
     <div v-else class="mt-18 mb-40 font-poppins">
-      <h1 class="font-semibold text-[42px]">Checkout</h1>
+      <h1 class="text-heading-1 text-blue-dark">Checkout</h1>
       <form class="mt-[42px] grid grid-cols-9 gap-30" @submit.prevent>
         <div class="col-span-6 px-12 bg-gray-primary rounded-2xl">
           <div class="mt-18 font-medium text-blue-dark-light text-[22px]">Order details</div>
