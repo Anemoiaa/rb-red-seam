@@ -10,7 +10,7 @@
           <!-- Filter -->
           <div class="mr-8 relative" ref="filterWrapper">
             <button
-              @click="filterIsOpen = !filterIsOpen"
+              @click="isFilterOpen = !isFilterOpen"
               class="flex items-center gap-2 text-blue-dark"
             >
               <IconFilter />
@@ -18,7 +18,7 @@
             </button>
             <form
               @submit.prevent="onApplyFilters"
-              v-show="filterIsOpen"
+              v-show="isFilterOpen"
               class="mt-[10px] absolute right-0 min-w-max border border-gray-primary-dark rounded-lg p-4 bg-white"
             >
               <h2 class="font-semibold">Select price</h2>
@@ -27,6 +27,7 @@
                   <PrimaryInput
                     v-model="filterPriceFrom"
                     :error="errors.from"
+                    id="from"
                     type="number"
                     placeholder="From"
                     required
@@ -36,6 +37,7 @@
                   <PrimaryInput
                     v-model="filterPriceTo"
                     :error="errors.to"
+                    id="to"
                     type="number"
                     placeholder="To"
                     required
@@ -43,7 +45,7 @@
                 </div>
               </div>
               <div class="flex justify-end">
-                <PrimaryButton class="w-30" type="submit">Apply</PrimaryButton>
+                <PrimaryButton class="!w-30 py-[10px]" type="submit">Apply</PrimaryButton>
               </div>
             </form>
           </div>
@@ -52,7 +54,7 @@
           <div class="relative" ref="sortWrapper">
             <button
               class="flex items-center gap-2 text-blue-dark"
-              @click="sortByIsOpen = !sortByIsOpen"
+              @click="isSortByOpen = !isSortByOpen"
             >
               <span>{{
                 sortOptions.find((opt) => opt.value === selectedSortBy)?.label || 'Sort By'
@@ -60,7 +62,7 @@
               <IconChevronDown />
             </button>
             <div
-              v-show="sortByIsOpen"
+              v-show="isSortByOpen"
               class="mt-[10px] absolute right-0 min-w-[223px] border border-gray-primary-dark rounded-lg p-4 bg-white"
             >
               <h2 class="font-semibold">Sort by</h2>
@@ -156,11 +158,11 @@ const currentPage = ref(1)
 
 const [filterPriceFrom] = defineField('from')
 const [filterPriceTo] = defineField('to')
-const filterIsOpen = ref(false)
+const isFilterOpen = ref(false)
 const filterWrapper = ref(null)
 
 const selectedSortBy = ref(null)
-const sortByIsOpen = ref(false)
+const isSortByOpen = ref(false)
 const sortWrapper = ref(null)
 
 const products = computed(() => data.value?.data || null)
@@ -181,12 +183,12 @@ async function fetchProducts() {
 async function applySort(sortValue) {
   selectedSortBy.value = sortValue
   await fetchProducts()
-  sortByIsOpen.value = false
+  isSortByOpen.value = false
 }
 
 async function onApplyFilters() {
   await fetchProducts()
-  filterIsOpen.value = false
+  isFilterOpen.value = false
 }
 
 async function resetPriceFilter() {
@@ -196,10 +198,10 @@ async function resetPriceFilter() {
 
 function handleClickOutside(e) {
   if (filterWrapper.value && !filterWrapper.value.contains(e.target)) {
-    filterIsOpen.value = false
+    isFilterOpen.value = false
   }
   if (sortWrapper.value && !sortWrapper.value.contains(e.target)) {
-    sortByIsOpen.value = false
+    isSortByOpen.value = false
   }
 }
 
