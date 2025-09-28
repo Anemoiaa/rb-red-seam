@@ -10,7 +10,8 @@
           <button @click="openCart" title="Cart">
             <IconCart />
           </button>
-          <div class="flex items-center gap-1">
+
+          <div ref="userProfileDropdown" class="relative flex items-center gap-1">
             <img
               v-if="user.avatar"
               :src="user.avatar"
@@ -23,9 +24,17 @@
             >
               {{ user?.username?.charAt(0) }}
             </div>
-            <button>
-              <IconChevronDown />
+            <button @click="isUserProfileDropdownOpen = !isUserProfileDropdownOpen">
+              <IconChevronDown :class="{'rotate-180 transition': isUserProfileDropdownOpen }" />
             </button>
+
+            <div
+              v-if="isUserProfileDropdownOpen"
+              class="mt-24 absolute right-0 min-w-[150px] border border-gray-primary-dark rounded-lg p-2 bg-white"
+              ref="userProfileDropdown"
+            >
+              <button @click="authService.logout()">Log out</button>
+            </div>
           </div>
         </div>
       </div>
@@ -49,7 +58,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue'
+import { ref, onBeforeMount, onMounted, onBeforeUnmount } from 'vue'
 import { useCart } from '@/composable/useCart.js'
 import authService from '@/services/authService.js'
 
@@ -58,12 +67,30 @@ import AppLogo from '@/compoonents/AppLogo.vue'
 import IconCart from '@/compoonents/Icons/IconCart.vue'
 import IconChevronDown from '@/compoonents/Icons/IconChevronDown.vue'
 
-const user = ref(null)
 const { cartIsOpen, openCart, closeCart } = useCart()
+
+const user = ref(null)
+const isUserProfileDropdownOpen = ref(false)
+const userProfileDropdown = ref(null)
+
+function handleClickOutside(e) {
+  if (userProfileDropdown.value && !userProfileDropdown.value.contains(e.target)) {
+    isUserProfileDropdownOpen.value = false
+  }
+}
 
 onBeforeMount(() => {
   user.value = authService.getUser()
 })
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
+
 </script>
 
 <style>

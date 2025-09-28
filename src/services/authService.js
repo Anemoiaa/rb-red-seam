@@ -1,5 +1,6 @@
 import Auth from '@/services/api/auth.js'
 import { useAuthStore } from '@/stores/auth.js'
+import { useRouter } from 'vue-router'
 
 class AuthService {
   constructor() {
@@ -20,6 +21,13 @@ class AuthService {
     const store = useAuthStore()
     store.setToken(data.token)
     store.setUser(data.user)
+  }
+
+  logout() {
+    const store = useAuthStore()
+    const router = useRouter()
+    store.logout()
+    router.push('/login')
   }
 
   getUser() {
