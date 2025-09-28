@@ -10,7 +10,11 @@ class AuthApi extends BaseApiClass {
       const res = await client.post(LOGIN_URI, credentials)
       return res.data
     } catch (error) {
-      this.handleError(error)
+      if (error.status === 401) {
+        this.handleError(new Error('Email or password is incorrect'))
+      } else {
+        this.handleError(error)
+      }
     }
   }
 

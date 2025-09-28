@@ -36,14 +36,14 @@ async function fetchCart() {
 async function addItem({ productId, color = null, size = null, quantity = 1 }) {
   const existing = findCartItem(productId, color, size)
 
-  if (existing) {
-    try {
+  try {
+    if (existing) {
       await updateItem({ productId, color, size, quantity: existing.quantity + quantity })
-    } catch (error) {
-      toast(error.message, { type: 'error' })
+    } else {
+      cartItems.value.push(await CartApi.addItem({ productId, color, size, quantity }))
     }
-  } else {
-    cartItems.value.push(await CartApi.addItem({ productId, color, size, quantity }))
+  } catch (error) {
+    toast(error.message, { type: 'error' })
   }
 }
 
@@ -74,9 +74,13 @@ async function removeItem(id) {
 
 async function checkout(name, surname, email, address, zipCode) {
   try {
-    return await CartApi.checkout(name, surname, email, address, zipCode)
+    await CartApi.checkout(name, surname, email, address, zipCode)
+
+    return true
   } catch (error) {
     toast(error.message, { type: 'error' })
+
+    return false
   }
 }
 
