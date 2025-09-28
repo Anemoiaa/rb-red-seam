@@ -72,7 +72,7 @@ import { ref, computed } from 'vue'
 
 const props = defineProps({
   id: String,
-  modelValue: String,
+  modelValue: String|Number,
   label: String,
   type: {
     type: String,
