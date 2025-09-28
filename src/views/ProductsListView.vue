@@ -109,7 +109,27 @@
     </div>
 
     <!--  Pagination -->
-    <div class="mt-[90px]"></div>
+    <div class="mt-[90px]">
+      <div class="flex justify-center items-center gap-2">
+        <button @click="prevPage">
+          <IconChevronDown class="rotate-90" />
+        </button>
+        <div class="flex gap-3 text-sm font-medium text-gray-dark/60">
+          <button
+            v-for="pageNum in pageNums"
+            :key="`p-${pageNum}`"
+            @click="currentPage = pageNum"
+            class="w-8 h-8 flex justify-center items-center border border-gray-primary-dark rounded-sm"
+            :class="{ 'text-red-primary border-red-primary': currentPage === pageNum }"
+          >
+            {{ pageNum }}
+          </button>
+        </div>
+        <button @click="nextPage">
+          <IconChevronDown class="rotate-270" />
+        </button>
+      </div>
+    </div>
     <div class="mt-[215px]"></div>
   </section>
 </template>
@@ -117,7 +137,8 @@
 <script setup>
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 import ProductPreview from '@/compoonents/ProductPreview.vue'
 import PrimaryInput from '@/compoonents/UI/PrimaryInput.vue'
@@ -126,6 +147,7 @@ import IconChevronDown from '@/compoonents/Icons/IconChevronDown.vue'
 import IconFilter from '@/compoonents/Icons/IconFilter.vue'
 import IconXmark from '@/compoonents/Icons/IconXmark.vue'
 import { useProduct } from '@/composable/useProduct.js'
+import usePagination from '@/composable/usePagination.js'
 
 const sortOptions = [
   { label: 'New products first', value: '-created_at' },
@@ -133,16 +155,21 @@ const sortOptions = [
   { label: 'Price, high to low', value: '-price' },
 ]
 
-const { fetchAll } = useProduct()
+const data = ref(null)
 
-const { errors, defineField, resetForm } = useForm({
+const route = useRoute()
+const router = useRouter()
+
+const { errors, defineField, resetForm, setValues } = useForm({
   validationSchema: yup.object({
     from: yup
       .number()
+      .nullable()
       .transform((v, o) => (o === '' ? null : v))
       .min(0, 'Must be greater than 0'),
     to: yup
       .number()
+      .nullable()
       .transform((v, o) => (o === '' ? null : v))
       .when('from', (from, schema) =>
         from ? schema.min(from, 'Must be greater than From') : schema,
@@ -154,10 +181,10 @@ const { errors, defineField, resetForm } = useForm({
   },
 })
 
-const data = ref(null)
+const { fetchAll } = useProduct()
+const { pageNums } = usePagination(data)
 
 const currentPage = ref(1)
-
 const [filterPriceFrom] = defineField('from')
 const [filterPriceTo] = defineField('to')
 const isFilterOpen = ref(false)
@@ -182,20 +209,34 @@ async function fetchProducts() {
   })
 }
 
+async function updateQuery() {
+  await router.replace({
+    query: {
+      page: currentPage.value,
+      sort: selectedSortBy.value || undefined,
+      from: filterPriceFrom.value || undefined,
+      to: filterPriceTo.value || undefined,
+    },
+  })
+  await fetchProducts()
+}
+
 async function applySort(sortValue) {
   selectedSortBy.value = sortValue
-  await fetchProducts()
-  isSortByOpen.value = false
+  currentPage.value = 1
+  await updateQuery()
 }
 
 async function onApplyFilters() {
-  await fetchProducts()
+  currentPage.value = 1
+  await updateQuery()
   isFilterOpen.value = false
 }
 
 async function resetPriceFilter() {
   resetForm({ values: { from: null, to: null } })
-  data.value = fetchProducts()
+  currentPage.value = 1
+  await updateQuery()
 }
 
 function handleClickOutside(e) {
@@ -207,8 +248,42 @@ function handleClickOutside(e) {
   }
 }
 
-onMounted(async () => {
-  await fetchProducts()
+function prevPage() {
+  if (currentPage.value > 1) {
+    currentPage.value -= 1
+  }
+}
+
+function nextPage() {
+  if (currentPage.value <= data.value.meta.last_page) {
+    currentPage.value += 1
+  }
+}
+
+watch([currentPage], async() => {
+  await updateQuery()
+})
+
+onMounted(() => {
+  const { page, sort, from, to } = route.query
+
+  if (page) {
+    currentPage.value = Number(page)
+  }
+
+  if (sort)
+  {
+    selectedSortBy.value = sort
+  }
+
+  if (from || to) {
+    setValues({
+      from: from ? Number(from) : null,
+      to: to ? Number(to) : null,
+    })
+  }
+
+  fetchProducts()
   document.addEventListener('click', handleClickOutside)
 })
 
@@ -216,3 +291,4 @@ onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
 })
 </script>
+
