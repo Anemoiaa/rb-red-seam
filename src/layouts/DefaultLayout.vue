@@ -25,7 +25,7 @@
               {{ user?.username?.charAt(0) }}
             </div>
             <button @click="isUserProfileDropdownOpen = !isUserProfileDropdownOpen">
-              <IconChevronDown :class="{'rotate-180 transition': isUserProfileDropdownOpen }" />
+              <IconChevronDown :class="{ 'rotate-180 transition': isUserProfileDropdownOpen }" />
             </button>
 
             <div
@@ -90,7 +90,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
 })
-
 </script>
 
 <style>
