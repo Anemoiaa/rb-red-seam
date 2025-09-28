@@ -59,9 +59,9 @@
 
 <script setup>
 import { ref, onBeforeMount, onMounted, onBeforeUnmount } from 'vue'
-import { useCart } from '@/composable/useCart.js'
-import authService from '@/services/authService.js'
 
+import { useCart } from '@/composable/useCart.js'
+import { useAuth } from '@/composable/useAuth.js'
 import ShopCart from '@/compoonents/ShopCart.vue'
 import AppLogo from '@/compoonents/AppLogo.vue'
 import IconCart from '@/compoonents/Icons/IconCart.vue'
@@ -69,7 +69,10 @@ import IconChevronDown from '@/compoonents/Icons/IconChevronDown.vue'
 
 const { cartIsOpen, openCart, closeCart } = useCart()
 
+const { getUser } = useAuth()
+
 const user = ref(null)
+
 const isUserProfileDropdownOpen = ref(false)
 const userProfileDropdown = ref(null)
 
@@ -80,7 +83,7 @@ function handleClickOutside(e) {
 }
 
 onBeforeMount(() => {
-  user.value = authService.getUser()
+  user.value = getUser()
 })
 
 onMounted(() => {

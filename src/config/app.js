@@ -1,1 +1,1 @@
-export const DELIVERY_PRICE = 5
+export const DELIVERY_PRICE = import.meta.env.VITE_DELIVERY_PRICE || 5

@@ -119,19 +119,21 @@ import { useForm } from 'vee-validate'
 import * as yup from 'yup'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
-import ProductsService from '@/services/productsService.js'
 import ProductPreview from '@/compoonents/ProductPreview.vue'
 import PrimaryInput from '@/compoonents/UI/PrimaryInput.vue'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
 import IconChevronDown from '@/compoonents/Icons/IconChevronDown.vue'
 import IconFilter from '@/compoonents/Icons/IconFilter.vue'
 import IconXmark from '@/compoonents/Icons/IconXmark.vue'
+import { useProduct } from '@/composable/useProduct.js'
 
 const sortOptions = [
   { label: 'New products first', value: '-created_at' },
   { label: 'Price, low to high', value: 'price' },
   { label: 'Price, high to low', value: '-price' },
 ]
+
+const { fetchAll } = useProduct()
 
 const { errors, defineField, resetForm } = useForm({
   validationSchema: yup.object({
@@ -172,7 +174,7 @@ const showingItemInfoString = computed(() => {
 })
 
 async function fetchProducts() {
-  data.value = await ProductsService.fetch({
+  data.value = await fetchAll({
     page: currentPage.value,
     priceFrom: filterPriceFrom.value,
     priceTo: filterPriceTo.value,

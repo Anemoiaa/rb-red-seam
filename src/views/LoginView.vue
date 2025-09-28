@@ -45,14 +45,13 @@ import cover from '@/assets/images/cover.png'
 
 import * as yup from 'yup'
 import { useForm } from 'vee-validate'
-import { useRouter } from 'vue-router'
 
 import { MIN_PASSWORD_LENGTH } from '@/config/validations.js'
-import AuthService from '@/services/authService.js'
+import { useAuth } from '@/composable/useAuth.js'
 import PrimaryInput from '@/compoonents/UI/PrimaryInput.vue'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
 
-const router = useRouter()
+const { login } = useAuth()
 
 const schema = yup.object({
   email: yup.string().required('Email is required').email('Invalid email'),
@@ -72,7 +71,6 @@ const [password] = defineField('password', {
 })
 
 const onSubmit = handleSubmit(async (values) => {
-  await AuthService.login(values.email, values.password)
-  await router.push({ name: 'products' })
+  await login(values.email, values.password)
 })
 </script>

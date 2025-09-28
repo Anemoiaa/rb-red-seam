@@ -1,5 +1,7 @@
+import { toast } from 'vue3-toastify'
 import { ref, computed, onMounted } from 'vue'
 import CartApi from '@/services/api/cart.js'
+
 import { DELIVERY_PRICE } from '@/config/app.js'
 
 const isOpen = ref(false)
@@ -15,7 +17,7 @@ function findCartItem(productId, color, size) {
   )
 }
 
-async function openCart() {
+function openCart() {
   isOpen.value = true
 }
 
@@ -24,14 +26,22 @@ function closeCart() {
 }
 
 async function fetchCart() {
-  cartItems.value = await CartApi.getCart()
+  try {
+    cartItems.value = await CartApi.getCart()
+  } catch (error) {
+    toast(error.message, { type: 'error' })
+  }
 }
 
 async function addItem({ productId, color = null, size = null, quantity = 1 }) {
   const existing = findCartItem(productId, color, size)
 
   if (existing) {
-    await updateItem({ productId, color, size, quantity: existing.quantity + quantity })
+    try {
+      await updateItem({ productId, color, size, quantity: existing.quantity + quantity })
+    } catch (error) {
+      toast(error.message, { type: 'error' })
+    }
   } else {
     cartItems.value.push(await CartApi.addItem({ productId, color, size, quantity }))
   }
@@ -40,21 +50,34 @@ async function addItem({ productId, color = null, size = null, quantity = 1 }) {
 async function updateItem({ productId, color, size, quantity = 1 }) {
   const existing = findCartItem(productId, color, size)
 
-  await CartApi.updateItem({ productId, quantity })
+  try {
+    await CartApi.updateItem({ productId, quantity })
 
-  existing.quantity = quantity
-  existing.total_price = existing.price * existing.quantity
-  existing.color = color
-  existing.size = size
+    existing.quantity = quantity
+    existing.total_price = existing.price * existing.quantity
+    existing.color = color
+    existing.size = size
+  } catch (error) {
+    toast(error.message, { type: 'error' })
+  }
 }
 
 async function removeItem(id) {
-  await CartApi.removeItem(id)
+  try {
+    await CartApi.removeItem(id)
+  } catch (error) {
+    toast(error.message, { type: 'error' })
+  }
+
   await fetchCart()
 }
 
 async function checkout(name, surname, email, address, zipCode) {
-  return await CartApi.checkout(name, surname, email, address, zipCode)
+  try {
+    return await CartApi.checkout(name, surname, email, address, zipCode)
+  } catch (error) {
+    toast(error.message, { type: 'error' })
+  }
 }
 
 export function useCart() {

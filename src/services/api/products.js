@@ -1,9 +1,10 @@
 import client from './client.js'
+import BaseApiClass from '@/services/api/baseApiClass.js'
 
 const PRODUCTS_URI = '/products'
 
-class ProductsApi {
-  async fetch({ page = 1, priceFrom = null, priceTo = null, sort = null } = {}) {
+class ProductsApi extends BaseApiClass {
+  async fetchAll({ page = 1, priceFrom = null, priceTo = null, sort = null } = {}) {
     const params = { page }
 
     if (priceFrom) {
@@ -16,13 +17,23 @@ class ProductsApi {
       params.sort = sort
     }
 
-    const { data } = await client.get(PRODUCTS_URI, { params })
-    return data
+    try {
+      const res = await client.get(PRODUCTS_URI, { params })
+
+      return res.data
+    } catch (error) {
+      this.handleError(error)
+    }
   }
 
   async fetchOne(id) {
-    const { data } = await client.get(`${PRODUCTS_URI}/${id}`)
-    return data
+    try {
+      const res = await client.get(`${PRODUCTS_URI}/${id}`)
+
+      return res.data
+    } catch (error) {
+      this.handleError(error)
+    }
   }
 }
 

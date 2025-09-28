@@ -96,11 +96,12 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { colorMap } from '@/config/colors.js'
 import { useCart } from '@/composable/useCart.js'
-import ProductsService from '@/services/productsService.js'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
 import IconCart from '@/compoonents/Icons/IconCart.vue'
+import { useProduct } from '@/composable/useProduct.js'
 
 const route = useRoute()
+const { fetchOne } = useProduct()
 
 const product = ref(null)
 const selectedItemIndex = ref(0)
@@ -122,7 +123,7 @@ async function addToCart() {
 }
 
 onMounted(async () => {
-  product.value = await ProductsService.fetchOne(route.params.id)
+  product.value = await fetchOne(route.params.id)
   selectedSize.value = product.value.available_sizes[0]
 })
 </script>

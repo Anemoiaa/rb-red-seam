@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AuthService from '@/services/authService.js'
+import { useAuth } from '@/composable/useAuth.js'
+
 import LoginView from '@/views/LoginView.vue'
 import GuestLayout from '@/layouts/GuestLayout.vue'
 import RegisterView from '@/views/RegisterView.vue'
@@ -42,7 +43,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-  const auth = AuthService.isAuthenticated()
+  const auth = useAuth().isAuthenticated()
 
   if (to.meta.guestOnly && auth) {
     return { name: 'products' }

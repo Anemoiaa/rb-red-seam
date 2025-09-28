@@ -89,16 +89,15 @@ import cover from '@/assets/images/cover.png'
 
 import * as yup from 'yup'
 import { useForm } from 'vee-validate'
-import { useRouter } from 'vue-router'
 import { computed, ref } from 'vue'
 
 import * as validationRules from '@/config/validations.js'
-import AuthService from '@/services/authService.js'
+import { useAuth } from '@/composable/useAuth.js'
 import PrimaryInput from '@/compoonents/UI/PrimaryInput.vue'
 import PrimaryButton from '@/compoonents/UI/PrimaryButton.vue'
 import IconCamera from '@/compoonents/Icons/IconCamera.vue'
 
-const router = useRouter()
+const { register } = useAuth()
 
 const schema = yup.object({
   username: yup
@@ -124,20 +123,12 @@ const schema = yup.object({
 
 const { handleSubmit, errors, defineField } = useForm({ validationSchema: schema })
 
-const [username] = defineField('username', {
-  validateOnModelUpdate: false,
-})
-const [email] = defineField('email', {
-  validateOnModelUpdate: false,
-})
-const [password] = defineField('password', {
-  validateOnModelUpdate: false,
-})
+const [username] = defineField('username', { validateOnModelUpdate: false })
+const [email] = defineField('email', { validateOnModelUpdate: false })
+const [password] = defineField('password', { validateOnModelUpdate: false })
 const [passwordConfirmation] = defineField('passwordConfirmation')
 
-// TODO validate file size and type
 const avatarFile = ref(null)
-
 const avatarSrc = computed(() => {
   if (avatarFile.value) {
     return URL.createObjectURL(avatarFile.value)
@@ -155,14 +146,12 @@ function removeAvatar() {
 }
 
 const onSubmit = handleSubmit(async (values) => {
-  await AuthService.register({
+  await register({
     username: values.username,
     email: values.email,
     password: values.password,
     passwordConfirmation: values.passwordConfirmation,
     avatar: avatarFile.value,
   })
-
-  await router.push({ name: 'products' })
 })
 </script>
