@@ -85,6 +85,8 @@
 </template>
 
 <script setup>
+import cover from '@/assets/images/cover.png'
+
 import * as yup from 'yup'
 import { useForm } from 'vee-validate'
 import { useRouter } from 'vue-router'
