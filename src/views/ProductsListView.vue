@@ -255,7 +255,7 @@ function prevPage() {
 }
 
 function nextPage() {
-  if (currentPage.value <= data.value.meta.last_page) {
+  if (currentPage.value < data.value.meta.last_page) {
     currentPage.value += 1
   }
 }
